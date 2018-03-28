@@ -18,3 +18,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware('auth')->group( function(){
+
+Route::model('user', App\User::class);
+
+    Route::resource('users', 'UserController', [
+        'except' => [ 'show' ]
+    ]); // In questo caso permette di creare la route senza specificarlo
+});
