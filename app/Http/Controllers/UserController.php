@@ -29,7 +29,12 @@ class UserController extends Controller
             $query->where('email', 'like', '%' . $request->input('email') . '%');
         }
         
-        $items = $query->paginate();
+        if($request->filled('_orderby')){
+            $query->orderBy($request->input('_orderby'), $request->input('_order'));  // Permette di ordinare i valori dei campi tramite le freccette
+        }
+            
+        
+        $items = $query->paginate();  // Dentro la parentesi sì può decidire il numero di righe che si vuole far vedere per pagina
         
         return view('user/index', compact('items'));
     }
