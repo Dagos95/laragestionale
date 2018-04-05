@@ -67,6 +67,9 @@
                         <th>{{ $item->first_name }}</th>
                         <th>{{ $item->last_name }}</th>
                         <th>{{ $item->email }}</th>
+                        <th><a href="{{ action('UserController@edit', [$item->id]) }}" class="btn btn-secondary pull-right btn-sm"> 
+                        <i class="fas fa-pencil-alt"></i>
+                        </a></th>
                     </tr>
                   @endforeach
                 </tbody>

@@ -8,6 +8,8 @@ use App\User;
 
 use App\Http\Requests\UserRequest;
 
+use App\Http\Requests\UserUpdateRequest;
+
 class UserController extends Controller
 {
     /**
@@ -62,8 +64,7 @@ class UserController extends Controller
        $instance->fill($request->except('password'));
        $instance->password = bcrypt($request->password);
        $instance->save();
-       return redirect()->action('UserController@index');
-       dd($request->all());
+       return redirect()->action('UserController@index', $instance->id);
     }
 
     /**
@@ -85,7 +86,7 @@ class UserController extends Controller
      */
     public function edit(User $instance)
     {
-        //
+       return view('user/form', compact('instance'));
     }
 
     /**
@@ -95,9 +96,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(User $instance)
+    public function update(UserUpdateRequest $request, User $instance)
     {
-        //
+
+          $instance->fill($request->except('password'));
+            if($request->filled('password')){
+              $instance->password = bcrypt($request->password);
+            }
+       $instance->save();
+        
+       return redirect()->action('UserController@edit', $instance->id);
     }
 
     /**

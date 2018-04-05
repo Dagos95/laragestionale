@@ -27,4 +27,5 @@ Route::model('user', App\User::class);
     Route::resource('users', 'UserController', [
         'except' => [ 'show' ]
     ]); // In questo caso permette di creare la route senza specificarlo
+    
 });
