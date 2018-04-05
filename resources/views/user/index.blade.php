@@ -3,7 +3,12 @@
 @section('content')
 <div class="container">
     <div class="card">
-        <div class="card-header">Utenti</div>
+        <div class="card-header">
+           Utenti
+           <a href="{{ action('UserController@create') }}" class="btn btn-sm btn-primary float-right">
+               <i class="fas fa-plus"></i>
+           </a>
+        </div>
         
         <div class="card-body">
            

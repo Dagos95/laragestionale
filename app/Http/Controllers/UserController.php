@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\User;
 
+use App\Http\Requests\UserRequest;
+
 class UserController extends Controller
 {
     /**
@@ -44,9 +46,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(User $instance)
     {
-        //
+        return view('user/form', compact('instance'));
     }
 
     /**
@@ -55,9 +57,13 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request, User $instance) // Andrà a prendere la classe dentro App > Http > Requests > UserRequest.php
     {
-        //
+       $instance->fill($request->except('password'));
+       $instance->password = bcrypt($request->password);
+       $instance->save();
+       return redirect()->action('UserController@index');
+       dd($request->all());
     }
 
     /**
