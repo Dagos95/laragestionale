@@ -64,7 +64,9 @@ class UserController extends Controller
        $instance->fill($request->except('password'));
        $instance->password = bcrypt($request->password);
        $instance->save();
-       return redirect()->action('UserController@index', $instance->id);
+       return redirect()
+           ->action('UserController@index', $instance->id)
+           ->with('alert-success', 'Utente salvato con successo');
     }
 
     /**
@@ -105,7 +107,9 @@ class UserController extends Controller
             }
        $instance->save();
         
-       return redirect()->action('UserController@edit', $instance->id);
+       return redirect()
+           ->action('UserController@edit', $instance->id)
+         ->with('alert-success', 'Utente salvato con successo');
     }
 
     /**
