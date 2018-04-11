@@ -109,7 +109,7 @@ class UserController extends Controller
         
        return redirect()
            ->action('UserController@edit', $instance->id)
-         ->with('alert-success', 'Utente salvato con successo');
+           ->with('alert-success', 'Utente salvato con successo');
     }
 
     /**
@@ -120,6 +120,16 @@ class UserController extends Controller
      */
     public function destroy(User $instance)
     {
-        //
+        
+        if($instance->id == auth()->id()){
+            return redirect()
+               ->back()
+               ->with('alert-warning', 'Utente selezionato non può essere cancellato');
+        }
+        
+        $instance->delete();
+        return redirect()
+               ->back()
+               ->with('alert-info', 'Utente è stato cancellato');
     }
 }

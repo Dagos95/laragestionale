@@ -2,5 +2,9 @@
     .col-action{
         width: 1%;
         white-space: nowrap;
+        
+        > * {
+            display: inline-block;
+        }
     }
 }

@@ -11,10 +11,37 @@
         </div>
         
         <div class="card-body">
+         
+         <form method="get" action="{{ action('UserController@index') }}" class="mb-4">
+            
+            <div class="row">
+              <div class="col-md-4">
+                 <div class="form-group">
+                    <input type="text" class="form-control" name="first_name" value="{{ request('first_name') }}" placeholder="Frst name">
+                 </div>
+              </div>
+              
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="last_name" value="{{ request('last_name') }}" placeholder="Last name">
+                </div>
+            </div>
+                       
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="email" value="{{ request('email') }}" placeholder="Email">
+                </div>
+            </div>
+        </div>   
+                        <button class="btn btn-sm btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                        <a class="btn btn-sm btn-warning" href="{{ action('UserController@index') }}"><i class="fas fa-eraser"></i></a>
+            </form>            
+             
+          
+          <table class="table table-bordered table-striped yable-hover">
            
-           <form method="get" action="{{ action('UserController@index') }}">
-           
-            <table class="table table-bordered table-striped yable-hover">
+    
+               
                 <thead>
                     <tr>
                         <th>
@@ -42,17 +69,7 @@
                     </tr>
                 </thead>
                 
-                <thead>
-                    <tr>
-                        <th><input type="text" class="form-controller" name="first_name" value="{{ request('first_name') }}"></th>
-                        <th><input type="text" class="form-controller" name="last_name" value="{{ request('last_name') }}"></th>
-                        <th><input type="text" class="form-controller" name="email" value="{{ request('email') }}"></th>
-                        <th class="col-action">
-                        <button class="btn btn-sm btn-primary" type="submit"><i class="fas fa-search"></i></button>
-                        <a class="btn btn-sm btn-warning" href="{{ action('UserController@index') }}"><i class="fas fa-eraser"></i></a>
-                        </th>
-                    </tr>
-                </thead>
+               
                 
                 <tfoot>
                    <tr>
@@ -67,16 +84,24 @@
                         <th>{{ $item->first_name }}</th>
                         <th>{{ $item->last_name }}</th>
                         <th>{{ $item->email }}</th>
-                        <th><a href="{{ action('UserController@edit', [$item->id]) }}" class="btn btn-secondary pull-right btn-sm"> 
+                        <th class="col-action"><a href="{{ action('UserController@edit', [$item->id]) }}" class="btn btn-secondary pull-right btn-sm"> 
                         <i class="fas fa-pencil-alt"></i>
-                        </a></th>
+                        </a>
+                        
+                        @if ($item->id != auth()->id())
+                         <form action="{{ action('UserController@destroy', [$item->id]) }}" method="post">
+                            {{ csrf_field() }}
+                            {{ method_field('delete') }} 
+                           <button type="submit" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                        
+                        @endif
+                        </th>
                     </tr>
                   @endforeach
                 </tbody>
-      
-            </table>
-            
-            </form>
+        
+             </table>
             
         </div>
     </div>
